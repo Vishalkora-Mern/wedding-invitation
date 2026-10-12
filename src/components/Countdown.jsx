@@ -1,0 +1,3 @@
+import useCountdown from '../hooks/useCountdown'
+import Reveal from './Reveal'
+export default function Countdown({data}){const {done,values}=useCountdown(data.weddingDate);return <section className="countdown-section"><Reveal><p className="section-kicker" lang="te">ఒక కొత్త ఆరంభం</p><h2>Counting down to forever</h2>{done?<p>The celebrations have begun</p>:<><div className="countdown" aria-live="off">{values.map((v,i)=><div key={i}><strong>{String(v).padStart(2,'0')}</strong><span>{['Days','Hours','Minutes','Seconds'][i]}</span></div>)}</div><p className="sr-only" aria-live="polite">{values[0]} days, {values[1]} hours and {values[2]} minutes until the wedding.</p></>}</Reveal></section>}

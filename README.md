@@ -1,0 +1,67 @@
+﻿# Telugu temple wedding invitation
+
+An original mobile-first React 18 / Vite invitation with Tailwind 3, React Router 6, Framer Motion, and Lucide UI icons. All decorative artwork is original inline SVG or CSS.
+
+## Run
+
+```sh
+npm install
+npm run dev
+npm run build
+npm run preview
+```
+
+Open `/invitation/vishal-darshana?to=Ramesh&demo=true`. The root redirects to the configured slug while preserving query parameters. `to` is plain text, trimmed and limited to 40 characters. `demo=true` enables the dismissible preview ribbon.
+
+## Customize
+
+Edit only `src/data/invitation.js` for names, Telugu names, parents, wedding ISO date including timezone, muhurtham, venue, event details and maps, feast dishes, photo paths, RSVP destination, music, and YouTube video. Put your own licensed assets in `public/` and reference them as `/photos/groom.jpg`, etc. Photo dimensions are reserved and photos load lazily. `heroVideo` and `heroPoster` are optional; video is muted and omitted for data-saving connections. Music starts only when the guest chooses Open with music on the entry screen or presses its toggle. An empty music or video URL hides its control/section. Metadata is regenerated from the same config before development and production builds.
+
+Colors are in `tailwind.config.js` and `src/index.css`; the latter includes dark section tokens, safe-area placement, and reduced-motion rules. Artwork components are in `src/components/art/`. Body scroll is locked during entry and in the gallery lightbox. The gallery supports arrow keys, Escape, focus trapping, and swipe.
+
+## RSVP with Google Sheets
+
+Create a Google Sheet and open Extensions > Apps Script. Use the script below, replacing the spreadsheet ID. Create a sheet named `RSVP` with columns Timestamp, Name, Guests, Response, Message, Invitation. Deploy > New deployment > Web app; execute as yourself and allow access to Anyone. Copy the `/exec` URL into `rsvp.endpoint`. After changing script code, update the deployment version. Apps Script ownership and access must permit anonymous guest submissions.
+
+```js
+function doPost(e) {
+  try {
+    const d = JSON.parse(e.postData.contents);
+    if (!d.name || String(d.name).length > 80 ||
+        !['1','2','3','4','5+'].includes(String(d.guests)) ||
+        !['yes','no'].includes(d.response)) throw new Error('Invalid response');
+    const sheet = SpreadsheetApp.openById('YOUR_SPREADSHEET_ID').getSheetByName('RSVP');
+    // Prefix formula-like input so guest text is stored as text.
+    const safe = v => /^[=+@-]/.test(String(v || '')) ? "'" + v : String(v || '');
+    const lock = LockService.getScriptLock();
+    lock.waitLock(10000);
+    try {
+      sheet.appendRow([new Date(), safe(d.name), d.guests, d.response,
+        safe(String(d.message || '').slice(0,2000)), safe(d.invitation)]);
+    } finally { lock.releaseLock(); }
+    return ContentService.createTextOutput(JSON.stringify({success:true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({success:false}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+```
+
+The request body is JSON with `text/plain` content type to avoid an unnecessary browser preflight. Your endpoint must return readable JSON `{ "success": true }`; do not use opaque `no-cors` responses because those cannot confirm delivery. Check the deployed web app from the actual hosting origin; if your Google workspace restricts access or CORS, use an endpoint/proxy with explicit CORS support. The app shows loading, inline validation, errors, retry, and prevents simultaneous submissions. A honeypot rejects basic bots. For a public production event, server-side rate limiting is recommended.
+
+With an empty endpoint, RSVP opens a prefilled WhatsApp message to `rsvp.whatsappNumber` (international digits only). The guest must press Send in WhatsApp. It does not claim delivery. The supplied number is dummy data: replace it before sharing the site.
+
+## Deploy
+
+Vercel: import this repository; framework Vite; build `npm run build`; output `dist`. `vercel.json` rewrites invitation routes to the SPA.
+
+Netlify: build `npm run build`; publish `dist`. `public/_redirects` provides the SPA fallback and is copied into the output. Other static hosts must serve `index.html` for `/invitation/*` routes.
+
+For WhatsApp previews, metadata uses the config. Add a hosted absolute Open Graph image URL if desired, using artwork or photos you own. This implementation uses an emoji SVG favicon and no stock assets. Google Fonts are the only external visual resource.
+
+## Verification
+
+`node scripts/check-browser.mjs` runs local Chromium interaction checks while the dev server runs on port 5173. It checks 360px and 1440px overflow, guest personalization and HTML escaping, gallery keyboard controls, RSVP validation and WhatsApp fallback, reduced motion, and mocked endpoint failure/retry/success. It uses the installed Windows Chrome path; change that path for other systems. Browser screenshots are written to ignored `artifacts/`.
+
+Placeholder content: all wedding/venue/parent/event details, portraits and gallery photos, WhatsApp number, empty RSVP endpoint, music, hero video, and optional wedding film. No guest RSVP is stored until you configure a real endpoint. Performance and accessibility Lighthouse targets are goals, not certified scores.

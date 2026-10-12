@@ -1,0 +1,4 @@
+import {useState} from 'react'
+import {Play} from 'lucide-react'
+import {Mandala} from './art/Artwork'
+export default function VideoSection({data}){const [playing,setPlaying]=useState(false);if(!data.videoUrl)return null;let id;try{const url=new URL(data.videoUrl);id=url.hostname==='youtu.be'?url.pathname.slice(1):url.searchParams.get('v')||url.pathname.split('/').pop()}catch{return null}if(!/^[\w-]{11}$/.test(id))return null;return <section className="section"><h2>A glimpse of our story</h2><div className="video-box">{playing?<iframe src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`} title="Our wedding film" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen/>:<button onClick={()=>setPlaying(true)} aria-label="Play our wedding film"><Mandala/><Play size={36}/><span>Play our story</span></button>}</div></section>}
