@@ -17,13 +17,17 @@ Open `/invitation/vishal-darshana?to=Ramesh&demo=true`. The root redirects to th
 
 Edit only `src/data/invitation.js` for names, Telugu names, parents, wedding ISO date including timezone, muhurtham, venue, event details and maps, feast dishes, photo paths, RSVP destination, music, and YouTube video. Put your own licensed assets in `public/` and reference them as `/photos/groom.jpg`, etc. Photo dimensions are reserved and photos load lazily. `heroVideo` and `heroPoster` are optional; video is muted and omitted for data-saving connections. Your configured background track (`/audio/bgm.mp3`) starts after pressing Open Invitation when Background music is checked. Uncheck it to open silently. Replace `musicUrl` with your own MP3 to use a different track. An empty music or video URL hides its control/section. Metadata is regenerated from the same config before development and production builds.
 
-The illustrated theme includes original SVG banana trees, hanging floral strings, Ganesha, parrots, peacock portrait frames, a wedding ceremony scene, and woven border patterns. Gentle botanical motion and staged name entrances respect reduced motion. The supplied `public/audio/bgm.mp3` is the active looping background track. The original synthesized demo remains available in `public/audio/temple-prelude.wav`.
+The illustrated theme includes original SVG brass hanging lamps, Ganesha, peacock portrait frames, detailed mandapam artwork with a seated couple, carved pillars, sacred fire and decorated elephants, and woven border patterns. Original ceremony illustrations show a turmeric bowl, nadaswaram, kalash, and diya; the featured Muhurtham has a maroon-and-gold panel. Soft entry/name/scroll reveals and gentle lamp flames respect reduced motion. CSS woven silk and thin gold borders decorate the maroon sections. The supplied `public/audio/bgm.mp3` is the active looping background track. The original synthesized demo remains available in `public/audio/temple-prelude.wav`.
 
 Entry and hero artwork use your supplied `public/images/toran.png` at the top and `public/images/hero_design.png` as the decorative background. Their URLs are in `artwork` in the invitation config. The toran is tiled horizontally and its transparent top margin is offset with CSS; the original image files are preserved.
 
 The nine supplied gallery photos are in `public/images/gallery/`; their order, descriptive alt text, captions, and thumbnail focal positions are configured in `invitation.js`. Original photos are preserved, and the lightbox shows each complete photo without cropping.
 
 Colors are in `tailwind.config.js` and `src/index.css`; the latter includes dark section tokens, safe-area placement, and reduced-motion rules. Artwork components are in `src/components/art/`. Body scroll is locked during entry and in the gallery lightbox. The gallery supports arrow keys, Escape, focus trapping, and swipe.
+
+## Guest details and calendar
+
+Set `venue.photo` and `venue.photoAlt` to display your real venue photograph; until supplied, an explicitly labelled decorative placeholder appears. Directions use `venue.mapsUrl`. Change `guestDetails.dressCode` for the optional traditional attire suggestion. The Add to calendar button downloads an `.ics` file with the muhurtham, venue, and directions; ISO timezone offsets are converted to UTC correctly. `guestDetails.calendarDurationMinutes` sets the event duration (120 minutes by default). Dates, text escaping, and UTF-8 line folding are covered by `node scripts/check-premium.mjs`, which also checks the downloaded file, directions, ceremony highlight, lamps, BGM, reduced motion, and all five target widths.
 
 ## RSVP with Google Sheets
 
