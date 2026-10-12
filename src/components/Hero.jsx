@@ -1,13 +1,14 @@
+import ProvidedArtwork from './art/ProvidedArtwork'
 ﻿import {motion} from 'framer-motion'
-import {Namam,Toranam,Garland,Mandala,KolamDivider} from './art/Artwork'
-import {BotanicalCorners,Ganesha,WeddingScene} from './art/TempleScene'
+import {Namam,KolamDivider} from './art/Artwork'
+import {Ganesha,WeddingScene} from './art/TempleScene'
 import useReducedMotion from '../hooks/useReducedMotion'
 function AnimatedName({children,opened,reduced}){return <span className="english-name">{Array.from(children).map((letter,i)=><motion.span key={i} initial={reduced?false:{opacity:0,y:25,rotateX:35}} animate={opened||reduced?{opacity:1,y:0,rotateX:0}:{opacity:0,y:25}} transition={{duration:.8,delay:reduced?0:.6+i*.08}}>{letter}</motion.span>)}</span>}
 export default function Hero({data,opened}){
  const date=new Date(data.weddingDate),reduced=useReducedMotion();
- return <header className="hero" id="home"><BotanicalCorners/><Toranam/><Garland/>
+ return <header className="hero" id="home"><ProvidedArtwork data={data}/>
   {data.heroVideo&&!navigator.connection?.saveData&&<video className="hero-video" src={data.heroVideo} poster={data.heroPoster||undefined} autoPlay loop muted playsInline/>}
-  <div className="hero-side left"><Mandala/></div><div className="hero-side right"><Mandala/></div>
+  
   <motion.div className="arch-frame" initial={reduced?false:{opacity:0}} animate={{opacity:opened||reduced?1:0}} transition={{duration:.8,delay:reduced?0:.3}}>
    <Ganesha/><div className="prayer"><Namam/><span lang="te">ఓం నమో వేంకటేశాయ</span><Namam/></div><p lang="te" className="telugu invitation-title">శుభ లగ్న పత్రిక</p>
    <p className="muted-gold small">With the blessings of our families</p>

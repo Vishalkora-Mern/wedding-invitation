@@ -19,6 +19,8 @@ Edit only `src/data/invitation.js` for names, Telugu names, parents, wedding ISO
 
 The illustrated theme includes original SVG banana trees, hanging floral strings, Ganesha, parrots, peacock portrait frames, a wedding ceremony scene, and woven border patterns. Gentle botanical motion and staged name entrances respect reduced motion. The supplied `public/audio/bgm.mp3` is the active looping background track. The original synthesized demo remains available in `public/audio/temple-prelude.wav`.
 
+Entry and hero artwork use your supplied `public/images/toran.png` at the top and `public/images/hero_design.png` as the decorative background. Their URLs are in `artwork` in the invitation config. The toran is tiled horizontally and its transparent top margin is offset with CSS; the original image files are preserved.
+
 Colors are in `tailwind.config.js` and `src/index.css`; the latter includes dark section tokens, safe-area placement, and reduced-motion rules. Artwork components are in `src/components/art/`. Body scroll is locked during entry and in the gallery lightbox. The gallery supports arrow keys, Escape, focus trapping, and swipe.
 
 ## RSVP with Google Sheets
