@@ -1,3 +1,4 @@
+import invitation from '../src/data/invitation.js'
 import {chromium} from '@playwright/test'
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true})
 const page=await browser.newPage({viewport:{width:360,height:800}})
@@ -9,9 +10,9 @@ await page.getByRole('dialog',{name:'Open wedding invitation'}).waitFor({state:'
 if(await page.locator('body').evaluate(el=>el.scrollWidth>innerWidth))throw Error('Mobile overflow')
 await page.waitForFunction(()=>document.querySelector('audio').currentTime>0);await page.getByRole('button',{name:'Pause music'}).click();if(!await page.locator('audio').evaluate(e=>e.paused))throw Error('Music pause failed');await page.getByRole('button',{name:'Play music'}).click();await page.waitForFunction(()=>!document.querySelector('audio').paused);
 if(await page.locator('#rsvp-name').inputValue()!=='Ramesh')throw Error('Guest not prefilled')
-await page.getByRole('button',{name:'Open A quiet moment together'}).click()
+await page.getByRole('button',{name:`Open ${invitation.gallery[0].alt}`}).click()
 await page.keyboard.press('ArrowRight')
-if(!(await page.getByRole('dialog').getAttribute('aria-label')).includes('smile'))throw Error('Lightbox arrows failed')
+if((await page.getByRole('dialog').getAttribute('aria-label'))!==invitation.gallery[1].alt)throw Error('Lightbox arrows failed')
 await page.keyboard.press('Escape')
 if(await page.getByRole('dialog').count())throw Error('Lightbox close failed')
 await page.locator('#rsvp-name').fill('')

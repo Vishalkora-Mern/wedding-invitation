@@ -21,6 +21,8 @@ The illustrated theme includes original SVG banana trees, hanging floral strings
 
 Entry and hero artwork use your supplied `public/images/toran.png` at the top and `public/images/hero_design.png` as the decorative background. Their URLs are in `artwork` in the invitation config. The toran is tiled horizontally and its transparent top margin is offset with CSS; the original image files are preserved.
 
+The nine supplied gallery photos are in `public/images/gallery/`; their order, descriptive alt text, captions, and thumbnail focal positions are configured in `invitation.js`. Original photos are preserved, and the lightbox shows each complete photo without cropping.
+
 Colors are in `tailwind.config.js` and `src/index.css`; the latter includes dark section tokens, safe-area placement, and reduced-motion rules. Artwork components are in `src/components/art/`. Body scroll is locked during entry and in the gallery lightbox. The gallery supports arrow keys, Escape, focus trapping, and swipe.
 
 ## RSVP with Google Sheets
@@ -68,4 +70,4 @@ For WhatsApp previews, metadata uses the config. Add a hosted absolute Open Grap
 
 `node scripts/check-browser.mjs` runs local Chromium interaction checks while the dev server runs on port 5173. It checks 360px and 1440px overflow, guest personalization and HTML escaping, gallery keyboard controls, RSVP validation and WhatsApp fallback, reduced motion, and mocked endpoint failure/retry/success. It uses the installed Windows Chrome path; change that path for other systems. Browser screenshots are written to ignored `artifacts/`.
 
-Placeholder content: all wedding/venue/parent/event details, portraits and gallery photos, WhatsApp number, empty RSVP endpoint, hero video, and optional wedding film. No guest RSVP is stored until you configure a real endpoint. Performance and accessibility Lighthouse targets are goals, not certified scores.
+Placeholder content: all wedding/venue/parent/event details, individual portraits, WhatsApp number, empty RSVP endpoint, hero video, and optional wedding film. No guest RSVP is stored until you configure a real endpoint. Performance and accessibility Lighthouse targets are goals, not certified scores.
