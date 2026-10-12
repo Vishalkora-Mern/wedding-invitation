@@ -1,0 +1,2 @@
+import ThemeImage from './ThemeImage'
+export default function TempleEntrance({data}){return <div className="temple-entrance" aria-hidden="true"><div className="temple-ground-glow"/><ThemeImage asset={data.artwork.plantain} name="plantain" className="entrance-plant entrance-plant-left"/><ThemeImage asset={data.artwork.temple} name="temple" className="entrance-temple"/><ThemeImage asset={data.artwork.plantain} name="plantain" className="entrance-plant entrance-plant-right"/><div className="temple-ground-line"/></div>}

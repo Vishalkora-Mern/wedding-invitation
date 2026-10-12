@@ -19,7 +19,7 @@ try{
  await page.setViewportSize({width:390,height:844})
  await page.goto('http://127.0.0.1:5173/invitation/'+data.slug)
  await page.waitForTimeout(1300);await page.screenshot({path:'artifacts/premium-entry.png'})
- assert.equal(await page.locator('.splash .hanging-lamp').count(),2)
+ assert.equal(await page.locator('.splash .theme-hanging-lamp').count(),2)
  assert.ok(await page.locator('audio').evaluate(el=>el.paused),'Sound must wait for the opening gesture')
  await page.getByRole('button',{name:'Open Invitation'}).click()
  await page.getByRole('dialog',{name:'Open wedding invitation'}).waitFor({state:'hidden'})

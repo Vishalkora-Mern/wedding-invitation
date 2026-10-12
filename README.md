@@ -1,6 +1,6 @@
 ﻿# Telugu temple wedding invitation
 
-An original mobile-first React 18 / Vite invitation with Tailwind 3, React Router 6, Framer Motion, and Lucide UI icons. All decorative artwork is original inline SVG or CSS.
+An original mobile-first React 18 / Vite invitation with Tailwind 3, React Router 6, Framer Motion, and Lucide UI icons. The design combines original inline SVG/CSS artwork with your supplied transparent PNG theme assets.
 
 ## Run
 
@@ -17,9 +17,9 @@ Open `/invitation/vishal-darshana?to=Ramesh&demo=true`. The root redirects to th
 
 Edit only `src/data/invitation.js` for names, Telugu names, parents, wedding ISO date including timezone, muhurtham, venue, event details and maps, feast dishes, photo paths, RSVP destination, music, and YouTube video. Put your own licensed assets in `public/` and reference them as `/photos/groom.jpg`, etc. Photo dimensions are reserved and photos load lazily. `heroVideo` and `heroPoster` are optional; video is muted and omitted for data-saving connections. Your configured background track (`/audio/bgm.mp3`) starts after pressing Open Invitation when Background music is checked. Uncheck it to open silently. Replace `musicUrl` with your own MP3 to use a different track. An empty music or video URL hides its control/section. Metadata is regenerated from the same config before development and production builds.
 
-The illustrated theme includes original SVG brass hanging lamps, Ganesha, peacock portrait frames, detailed mandapam artwork with a seated couple, carved pillars, sacred fire and decorated elephants, and woven border patterns. Original ceremony illustrations show a turmeric bowl, nadaswaram, kalash, and diya; the featured Muhurtham has a maroon-and-gold panel. Soft entry/name/scroll reveals and gentle lamp flames respect reduced motion. CSS woven silk and thin gold borders decorate the maroon sections. The supplied `public/audio/bgm.mp3` is the active looping background track. The original synthesized demo remains available in `public/audio/temple-prelude.wav`.
+The selected transparent PNGs provide Ganpati on entry, Balaji in the hero, brass hanging lamps, a golden temple with mirrored plantain foliage, kolam accents, a Sangeet dhol, and a small footer lotus. Original SVG peacock frames, ceremony icons, and detailed mandapam artwork in the Muhurtham panel complement them. Soft entry/name/scroll reveals and lamp glow respect reduced motion. CSS woven silk and thin gold borders decorate the maroon sections. The supplied `public/audio/bgm.mp3` is the active looping background track. The original synthesized demo remains available in `public/audio/temple-prelude.wav`.
 
-Entry and hero artwork use your supplied `public/images/toran.png` at the top and `public/images/hero_design.png` as the decorative background. Their URLs are in `artwork` in the invitation config. The toran is tiled horizontally and its transparent top margin is offset with CSS; the original image files are preserved.
+Entry and hero artwork use your supplied `public/images/toran.png` at the top and `public/images/hero_design.png` as the decorative background. Their URLs are in `artwork` in the invitation config. Additional theme assets use `src`, original pixel `size`, and visible artwork `crop` bounds; `ThemeImage` frames them using an SVG viewport without changing the supplied PNGs. `namalu.png`, `kalash.png`, and `dancer.png` are deferred and are not rendered. The toran is tiled horizontally and its transparent top margin is offset with CSS; the original image files are preserved.
 
 The nine supplied gallery photos are in `public/images/gallery/`; their order, descriptive alt text, captions, and thumbnail focal positions are configured in `invitation.js`. Original photos are preserved, and the lightbox shows each complete photo without cropping.
 

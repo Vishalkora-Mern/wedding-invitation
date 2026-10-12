@@ -1,3 +1,5 @@
+import ThemeImage from './art/ThemeImage'
+import SacredWeddingScene from './art/SacredWeddingScene'
 ﻿import {MapPin,ArrowUpRight} from 'lucide-react'
 import CeremonyIllustration from './art/CeremonyIllustration'
 import Reveal from './Reveal'
@@ -10,6 +12,8 @@ export default function Journey({data}){
    <p className="event-date">{new Date(`${event.date}T12:00:00+05:30`).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'})} <span>·</span> {event.time}</p>
    <p className="event-description"><Description text={event.description}/></p>
    {event.rituals&&<div className="ritual-chips">{event.rituals.map(ritual=><span key={ritual}>{ritual}</span>)}</div>}
+   {event.iconKey==='music'&&<ThemeImage asset={data.artwork.dhol} name="dhol" className="sangeet-dhol"/>}
+   {event.featured&&<div className="featured-wedding-art"><SacredWeddingScene/></div>}
    <p className="event-venue"><MapPin size={15}/>{event.venue}</p><a href={event.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-link">View Map <ArrowUpRight size={16}/></a>
   </article></Reveal>)}</div>
  </section>
