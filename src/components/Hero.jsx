@@ -1,4 +1,5 @@
 import ProvidedArtwork from './art/ProvidedArtwork'
+import HeroParrots from './HeroParrots'
 import {motion} from 'framer-motion'
 import {Namam,KolamDivider} from './art/Artwork'
 import ThemeImage from './art/ThemeImage'
@@ -7,7 +8,7 @@ import useReducedMotion from '../hooks/useReducedMotion'
 function AnimatedName({children,opened,reduced}){return <span className="english-name">{Array.from(children).map((letter,i)=><motion.span key={i} initial={reduced?false:{opacity:0,y:12}} animate={opened||reduced?{opacity:1,y:0}:{opacity:0,y:12}} transition={{duration:1.15,delay:reduced?0:.6+i*.09}}>{letter}</motion.span>)}</span>}
 export default function Hero({data,opened}){
  const date=new Date(data.weddingDate),reduced=useReducedMotion();
- return <header className="hero" id="home"><ProvidedArtwork data={data}/>
+ return <header className="hero" id="home"><ProvidedArtwork data={data}/><HeroParrots data={data} opened={opened}/>
   {data.heroVideo&&!navigator.connection?.saveData&&<video className="hero-video" src={data.heroVideo} poster={data.heroPoster||undefined} autoPlay loop muted playsInline/>}
   
   <motion.div className="arch-frame" initial={reduced?false:{opacity:0}} animate={{opacity:opened||reduced?1:0}} transition={{duration:.8,delay:reduced?0:.3}}>

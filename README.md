@@ -25,6 +25,10 @@ The nine supplied gallery photos are in `public/images/gallery/`; their order, d
 
 Colors are in `tailwind.config.js` and `src/index.css`; the latter includes dark section tokens, safe-area placement, and reduced-motion rules. Artwork components are in `src/components/art/`. Body scroll is locked during entry and in the gallery lightbox. The gallery supports arrow keys, Escape, focus trapping, and swipe.
 
+## Hero parrots
+
+The selected flying and perched PNGs are in `public/images/parrot-flying.png` and `parrot-perched.png`. The other flying reference was not used. `artwork.parrots.enabled` controls visibility; `flightSeconds` sets the gentle arrival duration. Two mirrored birds enter once after opening, crossfade into seated poses at the toran, and then move only slightly at long intervals. Resize and scroll do not replay the flight. Reduced-motion guests see stationary perched birds without downloading the flying sprite. `node scripts/check-parrots.mjs` verifies this behavior, responsive placement above Ganpati, and image controls.
+
 ## Guest details and calendar
 
 Set `venue.photo` and `venue.photoAlt` to display your real venue photograph; until supplied, an explicitly labelled decorative placeholder appears. Directions use `venue.mapsUrl`. Change `guestDetails.dressCode` for the optional traditional attire suggestion. The Add to calendar button downloads an `.ics` file with the muhurtham, venue, and directions; ISO timezone offsets are converted to UTC correctly. `guestDetails.calendarDurationMinutes` sets the event duration (120 minutes by default). Dates, text escaping, and UTF-8 line folding are covered by `node scripts/check-premium.mjs`, which also checks the downloaded file, directions, ceremony highlight, lamps, BGM, reduced motion, and all five target widths.
