@@ -3,9 +3,11 @@ const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chr
 const page=await browser.newPage({viewport:{width:360,height:800}})
 const errors=[];page.on('pageerror',e=>errors.push(e.message))
 await page.goto('http://127.0.0.1:5173/invitation/vishal-darshana?to=Ramesh&demo=true')
+if(!await page.locator('audio').evaluate(e=>e.paused))throw Error('Audio started before gesture')
 await page.getByRole('button',{name:'Open Invitation'}).click()
-await page.waitForTimeout(750)
+await page.getByRole('dialog',{name:'Open wedding invitation'}).waitFor({state:'hidden'})
 if(await page.locator('body').evaluate(el=>el.scrollWidth>innerWidth))throw Error('Mobile overflow')
+await page.waitForFunction(()=>document.querySelector('audio').currentTime>0);await page.getByRole('button',{name:'Pause music'}).click();if(!await page.locator('audio').evaluate(e=>e.paused))throw Error('Music pause failed');await page.getByRole('button',{name:'Play music'}).click();await page.waitForFunction(()=>!document.querySelector('audio').paused);
 if(await page.locator('#rsvp-name').inputValue()!=='Ramesh')throw Error('Guest not prefilled')
 await page.getByRole('button',{name:'Open A quiet moment together'}).click()
 await page.keyboard.press('ArrowRight')
@@ -31,10 +33,10 @@ if(await page.locator('.flame').first().evaluate(el=>getComputedStyle(el).animat
 await page.goto('http://127.0.0.1:5173/?to=%3Cscript%3Ealert(1)%3C%2Fscript%3E')
 await page.getByRole('button',{name:'Open Invitation'}).waitFor()
 if(!await page.getByRole('dialog').getByText('Dear <script>alert(1)</script>,',{exact:true}).isVisible())throw Error('Escaping failed')
-await page.route('**/src/data/invitation.js',async route=>{const response=await route.fetch();const body=(await response.text()).replace(/endpoint:\s*["']["']/, 'endpoint: "https://rsvp.test/submit"');await route.fulfill({response,body})})
+await page.route('**/src/data/invitation.js*',async route=>{const response=await route.fetch();const body=(await response.text()).replace(/endpoint:\s*["']["']/, 'endpoint: "https://rsvp.test/submit"');await route.fulfill({response,body})})
 let attempts=0;
 await page.route('https://rsvp.test/submit',async route=>{attempts++;const payload=JSON.parse(route.request().postData());if(payload.name!=='Ramesh'||payload.guests!=='1')throw Error('Incorrect RSVP payload');await route.fulfill({status:attempts===1?500:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify({success:attempts!==1})})});
 await page.goto('http://127.0.0.1:5173/invitation/vishal-darshana?to=Ramesh');await page.getByRole('button',{name:'Open Invitation'}).click();await page.waitForTimeout(750);await page.getByRole('button',{name:'Send RSVP'}).click();await page.getByRole('button',{name:'Retry RSVP'}).waitFor();await page.getByRole('button',{name:'Retry RSVP'}).click();await page.getByRole('status').filter({hasText:'Thank you, Ramesh.'}).waitFor();
 if(errors.length)throw Error(errors.join('\n'))
-console.log('Passed: mobile/desktop overflow, personalization and escaping, lightbox keyboard, RSVP validation and WhatsApp, reduced motion; no page errors.')
+console.log('Passed: music gesture/play/pause/resume and mocked RSVP failure/retry/success; mobile/desktop overflow, personalization and escaping, lightbox keyboard, RSVP validation and WhatsApp, reduced motion; no page errors.')
 await browser.close()
