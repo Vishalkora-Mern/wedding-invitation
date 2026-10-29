@@ -5,6 +5,11 @@ import data from '../src/data/invitation.js'
 const base = process.argv[2]
 assert(base?.startsWith('/') && base.endsWith('/'), 'Supply the expected build base')
 const html = fs.readFileSync('dist/index.html', 'utf8')
+assert(!html.includes('/src/') && !html.includes('.jsx'), 'Source entry found: deploy compiled assets only')
+assert(html.includes(`href="${base}favicon.svg"`), 'Incorrect favicon URL')
+assert(fs.existsSync('public/favicon.svg'), 'Missing source favicon')
+assert(new RegExp('src="' + base + 'assets/[^" ]+\\.js"').test(html), 'Missing generated JavaScript entry')
+assert(new RegExp('href="' + base + 'assets/[^" ]+\\.css"').test(html), 'Missing generated CSS entry')
 const fallback = fs.readFileSync('dist/404.html', 'utf8')
 assert(fallback.includes(`location.replace(\`${base}?__route=`), 'Incorrect 404 base')
 assert(!html.includes('%BASE_URL%') && !fallback.includes('%BASE_URL%'), 'Unresolved base placeholder')

@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode hostinger",
     "lint": "oxlint",
     "preview": "vite preview",
     "prebuild": "node scripts/metadata.mjs",
     "predev": "node scripts/metadata.mjs",
     "build:github": "node scripts/metadata.mjs && vite build --mode github",
-    "build:hostinger": "node scripts/metadata.mjs && vite build --mode hostinger"
+    "build:hostinger": "npm run build",
+    "postbuild": "node scripts/check-build.mjs /"
   },
   "dependencies": {
     "framer-motion": "^14.1.0",

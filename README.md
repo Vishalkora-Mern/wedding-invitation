@@ -86,6 +86,10 @@ Placeholder content: all wedding/venue/parent/event details, individual portrait
 
 - GitHub Pages: run `npm run build:github` for `/wedding-invitation/`. The existing GitHub Actions workflow uses this command.
 - Hostinger: run `npm run build:hostinger` and upload the contents of `dist/` (including `.htaccess`) to `public_html/`. The rewrite supports direct invitation links and page refreshes.
-- `npm run build` defaults to the domain root. Set `VITE_BASE_PATH` to override the base for any build. The platform defaults are in `.env.github` and `.env.hostinger`.
+- `npm run build` uses Hostinger mode at the domain root. Set `VITE_BASE_PATH` to override the base for any build. The platform defaults are in `.env.github` and `.env.hostinger`.
 
-All public assets use `publicAsset()`, HTML uses `%BASE_URL%`, and the router uses Vite's `BASE_URL`. The generated 404 page uses the same build base. Each build replaces `dist/`; upload the output from the build for your intended host.
+All public assets use `publicAsset()`, HTML asset URLs are rewritten by Vite, and the router uses Vite's `BASE_URL`. The generated 404 page uses the same build base. Each build replaces `dist/`; upload the output from the build for your intended host.
+
+### Hostinger upload checklist
+
+Run `npm run build` (Hostinger root build). Its automatic postbuild check verifies the favicon, compiled JavaScript/CSS, public assets, and routing fallback. Upload **the contents of `dist/`** into the domain's `public_html/`, including `assets/`, `images/`, `audio/`, `favicon.svg`, and hidden `.htaccess`. Replace the deployed `index.html` with `dist/index.html`; do not upload the project-root `index.html` or `src/`. The source entry requires Vite transformation and cannot run directly on static hosting. After uploading the complete build, clear any hosting cache and refresh the browser.
