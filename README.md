@@ -72,6 +72,8 @@ Vercel: import this repository; framework Vite; build `npm run build`; output `d
 
 Netlify: build `npm run build`; publish `dist`. `public/_redirects` provides the SPA fallback and is copied into the output. Other static hosts must serve `index.html` for `/invitation/*` routes.
 
+GitHub Pages deploys automatically from `main` using `.github/workflows/deploy.yml`. The workflow builds the site and publishes `dist`; `public/CNAME` configures `www.darshanawedsvishal.online`. In the repository's Settings > Pages, select GitHub Actions as the build and deployment source if it is not already selected. Add a DNS CNAME record for `www` pointing to `Vishalkora-Mern.github.io` and A records for the bare domain pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`; GitHub Pages will redirect the bare domain to `www`. GitHub Pages serves the invitation route fallback through `public/404.html`.
+
 For WhatsApp previews, metadata uses the config. Add a hosted absolute Open Graph image URL if desired, using artwork or photos you own. This implementation uses an emoji SVG favicon and no stock assets. Google Fonts are the only external visual resource.
 
 ## Verification
