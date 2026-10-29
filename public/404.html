@@ -6,7 +6,7 @@
     <title>Wedding invitation</title>
     <script>
       const requestedPath = `${location.pathname}${location.search}${location.hash}`
-      location.replace(`/?__route=${encodeURIComponent(requestedPath)}`)
+      location.replace(`%BASE_URL%?__route=${encodeURIComponent(requestedPath)}`)
     </script>
   </head>
   <body></body>
